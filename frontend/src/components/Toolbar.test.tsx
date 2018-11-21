@@ -57,6 +57,10 @@ const breadcrumbs = [
 const history = createBrowserHistory({});
 
 describe('Toolbar', () => {
+  beforeAll(() => {
+    history.push('/pipelines');
+  });
+
   it('renders nothing when there are no breadcrumbs or actions', () => {
     const tree = shallow(<Toolbar breadcrumbs={[]} actions={[]} history={history} />);
     expect(tree).toMatchSnapshot();
@@ -130,6 +134,14 @@ describe('Toolbar', () => {
   });
 
   it('renders with two breadcrumbs and two actions', () => {
+    const tree = shallow(<Toolbar breadcrumbs={breadcrumbs} actions={actions} history={history} />);
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('disables the back button when there is no browser history', () => {
+    // This test should not be passing. createBrowserHistory seems to return an singleton. so it is
+    // not empty when it needs to be here.
+    fail();
     const tree = shallow(<Toolbar breadcrumbs={breadcrumbs} actions={actions} history={history} />);
     expect(tree).toMatchSnapshot();
   });
